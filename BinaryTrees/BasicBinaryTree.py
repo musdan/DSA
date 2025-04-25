@@ -1,6 +1,7 @@
 # Basic (most simple) implementation of a Binary search tree
 # with all the DFS traversals
 
+from collections import deque
 
 class Node:
     def __init__(self, data=None):
@@ -52,6 +53,26 @@ def postorder(root):
     postorder(root.left)
     print("data: ", root.data)
     
+def levelorder(root):
+    
+    queue = deque()
+    queue.append(root)
+    traversed_nodes = []
+    
+    while queue:
+        qsize = len(queue)
+        while qsize:
+            node = queue.popleft()
+            traversed_nodes.append(node.data)
+            if node.left is not None:
+                queue.append(node.left)
+            if node.right is not None:
+                queue.append(node.right)
+            qsize -=1
+            
+    return traversed_nodes
+    
+    
 root = Node(10)
 insert(root, 5)
 insert(root, 2)
@@ -66,3 +87,6 @@ print("\nPreorder: ")
 preorder(root)
 print("\nPostorder: ")
 preorder(root)
+print("Level order:")
+levelorder_nodes = levelorder(root)
+print(levelorder_nodes)
